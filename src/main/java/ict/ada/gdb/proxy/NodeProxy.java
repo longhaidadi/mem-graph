@@ -115,4 +115,15 @@ public class NodeProxy extends ProxyBase implements Node {
         return gs.delNodeAttr(node.getType(),node.getId(),key);
     }
 
+    public boolean isMaster() {
+        return false;
+    }
+
+    public int data() {
+        return 0;
+    }
+
+    public List<Integer> mirrors() {
+        return null;
+    }
 }

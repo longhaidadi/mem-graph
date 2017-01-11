@@ -7,12 +7,10 @@ import ict.ada.gdb.model.GDBAttribute;
 import ict.ada.gdb.model.GDBNode;
 import ict.ada.gdb.model.GDBRelation;
 import ict.ada.gdb.model.GraphMeta;
+import ict.ada.gdb.proxy.NodeProxy;
 import redis.clients.jedis.Jedis;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.Properties;
+import java.util.*;
 
 /**
  * Created by lon on 17-1-10.
@@ -25,9 +23,19 @@ public class GraphService {
 
     private int graphId;
 
+    private static String ISMASTER = "m";
+
+    private static String SLAVES = "s";
+
+    private static String DATA = "d";
+
+    private static String COLOR = "c";
 
     public GraphService(String graphName,Properties properties) {
 
+        this.graphName = graphName;
+        this.graphId = getGraphMeta().getId();
+        this.properties = properties;
     }
 
     /**
@@ -43,7 +51,22 @@ public class GraphService {
     public Node getNode(int nType, String nodeId){
 
         Jedis jedis = TableManager.selectNodeTable(graphId);
-        return null;
+        Map<String,String> resultMap = jedis.hgetAll(ID.makeNodeIdKey(nType, nodeId));
+
+        if(resultMap==null || resultMap.isEmpty() )
+            return null;
+
+        int data = Integer.parseInt(resultMap.get(DATA));
+        String slaves = resultMap.get(SLAVES);
+        int color = Integer.parseInt(COLOR);
+        boolean isMaster = Boolean.parseBoolean(resultMap.get(ISMASTER));
+
+        GDBNode node = new GDBNode(nType,nodeId);
+        node.setIsMaster(isMaster);
+        node.setData(data);
+        node.setSlaves(slaves);
+        node.setColor(color);
+        return new NodeProxy(this,node);
     }
 
     /**

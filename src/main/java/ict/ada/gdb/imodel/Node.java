@@ -15,6 +15,11 @@ public interface Node extends WithAttribute, Comparable<Node> {
 
     String type();
 
+    boolean isMaster();
+
+    int data();
+
+    List<Integer> mirrors();
 
     Collection<Node> getInNodes();
 

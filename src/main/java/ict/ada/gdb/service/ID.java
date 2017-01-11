@@ -11,22 +11,22 @@ public class ID {
 
     public static String Name = "n";
 
-    public static String makeNodeIdKey(String nType, String nodeId){
+    public static String makeNodeIdKey(int nType, String nodeId){
 
         return nType+ConStr+nodeId;
     }
 
-    public static String makeNodeAttrKey(String nType, String nodeId){
+    public static String makeNodeAttrKey(int nType, String nodeId){
 
         return nType+ConStr+nodeId+ConStr+Attr;
     }
 
-    public static String makeRelationIdKey(String snType,String snId,String tnType,String tnId,String rType){
+    public static String makeRelationIdKey(int snType,String snId,int tnType,String tnId,int rType){
 
         return snType+ConStr+snId+ConStr+tnType+ConStr+rType;
     }
 
-    public static String makeRelationAttrKey(String snType,String snId,String tnType,String tnId,String rType){
+    public static String makeRelationAttrKey(int snType,String snId,int tnType,String tnId,int rType){
 
         return snType+ConStr+snId+ConStr+tnType+ConStr+rType+ConStr+Attr;
     }

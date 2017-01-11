@@ -14,6 +14,7 @@ public class GolaxyGraph {
 
     public  static Graph openGraph(Properties properties, String graphName){
 
+
         return new GraphProxy(new GraphService(graphName,properties),graphName);
     }
 
