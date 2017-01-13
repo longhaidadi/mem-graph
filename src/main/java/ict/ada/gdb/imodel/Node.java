@@ -21,17 +21,10 @@ public interface Node extends WithAttribute, Comparable<Node> {
 
     List<Integer> mirrors();
 
-    Collection<Node> getInNodes();
+    Collection<Node> neighbors();
 
-    Collection<Node> getInNodes(String tailType);
+    Collection<Node> neighbors(String tailType);
 
-    Collection<Node> getInNodes(String tailType, String relType);
-
-    Collection<Node> getOutNodes();
-
-    Collection<Node> getOutNodes(String tailType);
-
-    Collection<Node> getOutNodes(String tailType, String relType);
-
+    Collection<Node> neighbors(String tailType, String relType);
 
 }

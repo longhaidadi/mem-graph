@@ -68,16 +68,16 @@ public class RelationProxy  extends ProxyBase implements Relation {
         return gs.getRelationAttrs(relation.getHead(), relation.getTail(), relation.getType());
     }
 
-    public boolean addAttribute(String key, Object value) {
+    public boolean addAttribute(String key, String value) {
 
         relation.addAttribute(new GDBAttribute(key,value));
 
-        return gs.addRelationAttr(relation,key,value);
+        return gs.addRelationAttr(relation.getHead(),relation.getTail(),relation.getType(),key,value);
     }
 
-    public Object getAttributeValue(String key) {
+    public String getAttributeValue(String key) {
 
-        return gs.getRelationAttr(relation, key);
+        return gs.getRelationAttr(relation.getHead(),relation.getTail(),relation.getType(), key);
     }
 
 

@@ -32,7 +32,7 @@ public class GraphProxy extends ProxyBase implements Graph {
     }
 
     public List<Node> listNodes() {
-        return null;
+        return gs.listNodes(-1);
     }
 
     public List<Node> listNodes(String type) {

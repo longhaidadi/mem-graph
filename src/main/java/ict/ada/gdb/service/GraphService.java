@@ -204,7 +204,7 @@ public class GraphService {
     /**
      * 为指定的关系添加属性
      **/
-    public boolean addRelationAttr(GDBNode src, GDBNode des, int rType, String key, Object value) {
+    public boolean addRelationAttr(GDBNode src, GDBNode des, int rType, String key, String value) {
 
         if (value == null || !existRelation(src, des, rType)) return false;
         Jedis jedis = TableManager.selectAttributeTable(graphId);
@@ -379,7 +379,7 @@ public class GraphService {
         return true;
     }
 
-    List<Node> listNodes() {
+    public List<Node> listNodes(int nType) {
 
         Jedis jedis = TableManager.selectNodeTable(graphId);
         Set<String> keys = jedis.keys("*");
@@ -387,14 +387,17 @@ public class GraphService {
         for (String key : keys){
             String [] array = key.split(ID.ConStr);
 
-            Map<String, String> resultMap = jedis.hgetAll(ID.makeNodeIdKey(Integer.parseInt(array[0]),array[1]));
+            int nT = Integer.parseInt(array[0]);
+            if(nType!=-1 && nT != nType)continue;
+
+            Map<String, String> resultMap = jedis.hgetAll(ID.makeNodeIdKey(nT,array[1]));
 
             int data = Integer.parseInt(resultMap.get(DATA));
             String slaves = resultMap.get(SLAVES);
             int color = Integer.parseInt(COLOR);
             boolean isMaster = Boolean.parseBoolean(resultMap.get(ISMASTER));
 
-            GDBNode node = new GDBNode(Integer.parseInt(array[0]),array[1]);
+            GDBNode node = new GDBNode(nT,array[1]);
             node.setIsMaster(isMaster);
             node.setData(data);
             node.setSlaves(slaves);
@@ -404,7 +407,7 @@ public class GraphService {
         return nodes;
     }
 
-    List<Relation> listRelations(){
+    public List<Relation> listRelations(int tType,int rType){
         Jedis jedis = TableManager.selectRelationTable(graphId);
         Set<String> keys = jedis.keys("*");
         List<Relation> relations = new LinkedList<Relation>();
@@ -412,7 +415,8 @@ public class GraphService {
             String [] array = key.split(ID.ConStr);
             GDBNode src = new GDBNode(Integer.parseInt(array[0]),array[1]);
             GDBNode des = new GDBNode(Integer.parseInt(array[2]),array[3]);
-            int rType = Integer.parseInt(array[4]);
+            int rT = Integer.parseInt(array[4]);
+            if((tType!=-1 && tType!=des.getType())||(rType!=-1 && rType != rT))continue;
 
             Map<String, String> resultMap = jedis.hgetAll(ID.makeRelationIdKey(src.getType(), src.getId(), des.getType(), des.getId(), rType));
 

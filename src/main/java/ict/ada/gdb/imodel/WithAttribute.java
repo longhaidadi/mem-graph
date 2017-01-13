@@ -8,7 +8,7 @@ import java.util.List;
 public interface WithAttribute {
     List<Attribute> attributes();
 
-    boolean addAttribute(String key, Object value);
+    boolean addAttribute(String key, String value);
 
 
 

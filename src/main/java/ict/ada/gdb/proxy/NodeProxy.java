@@ -7,7 +7,9 @@ import ict.ada.gdb.model.GDBAttribute;
 import ict.ada.gdb.model.GDBNode;
 import ict.ada.gdb.service.GraphService;
 import ict.ada.gdb.service.ID;
+import org.omg.CORBA.INTERNAL;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -40,34 +42,19 @@ public class NodeProxy extends ProxyBase implements Node {
     }
 
 
-    public Collection<Node> getInNodes() {
+    public Collection<Node> neighbors() {
 
-        return gs.inNodes(node.getType(), node.getId(), -1, -1);
+        return gs.neighbors(node, -1, -1);
     }
 
-    public Collection<Node> getInNodes(String tailType) {
+    public Collection<Node> neighbors(String tailType) {
 
-        return gs.inNodes(node.getType(), node.getId(), getNodeType(tailType), -1);
+        return gs.neighbors(node, getNodeType(tailType), -1);
     }
 
-    public Collection<Node> getInNodes(String tailType, String relType) {
+    public Collection<Node> neighbors(String tailType, String relType) {
 
-        return gs.inNodes(node.getType(), node.getId(), getNodeType(tailType), getRelType(relType));
-    }
-
-    public Collection<Node> getOutNodes() {
-
-        return gs.outNodes(node.getType(), node.getId(), -1, -1);
-    }
-
-    public Collection<Node> getOutNodes(String tailType) {
-
-        return gs.outNodes(node.getType(), node.getId(), getNodeType(tailType), -1);
-    }
-
-    public Collection<Node> getOutNodes(String tailType, String relType) {
-
-        return gs.outNodes(node.getType(), node.getId(), getNodeType(tailType), getRelType(relType));
+        return gs.neighbors(node, getNodeType(tailType), getRelType(relType));
     }
 
     public int compareTo(Node o) {
@@ -80,7 +67,7 @@ public class NodeProxy extends ProxyBase implements Node {
         return gs.getNodeAttrs(node.getType(), node.getId());
     }
 
-    public boolean addAttribute(String key, Object value) {
+    public boolean addAttribute(String key, String value) {
 
         node.addAttribute(new GDBAttribute(key,value));
 
@@ -116,14 +103,25 @@ public class NodeProxy extends ProxyBase implements Node {
     }
 
     public boolean isMaster() {
-        return false;
+        return node.isMaster();
     }
 
     public int data() {
-        return 0;
+        return node.getData();
     }
 
     public List<Integer> mirrors() {
-        return null;
+
+        List<Integer> lists = new ArrayList<Integer>();
+        String slaves = node.getSlaves();
+        String [] array = slaves.split(ID.ConStr);
+        for(String slave : array){
+            lists.add(Integer.parseInt(slave));
+        }
+        return lists;
     }
+
+
+
+
 }
