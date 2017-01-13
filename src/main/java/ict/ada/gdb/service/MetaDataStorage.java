@@ -44,7 +44,7 @@ public class MetaDataStorage implements IMetaDataStorage {
     public List<GraphMeta> listGraphs() {
 
         List<GraphMeta> metas = new ArrayList<GraphMeta>();
-        List<String> gns = jedis.lrange(PREFIX,0,-1);
+        List<String> gns = jedis.lrange(PREFIX, 0, -1);
 
         for(String graphName : gns) {
 
@@ -60,7 +60,10 @@ public class MetaDataStorage implements IMetaDataStorage {
 
         int graphId = jedis.hget(gn,"graphId")==null?-1:Integer.parseInt(jedis.hget(gn,"graphId"));
 
-        if(graphId<0) graphId=createGraph(graphName);
+        if(graphId<0) {
+            System.out.println("graphName: " + graphName + "does not exist");
+            return null;
+        }
 
         GraphMeta meta = new GraphMeta(graphId,this);
 
@@ -136,10 +139,12 @@ public class MetaDataStorage implements IMetaDataStorage {
         }
     }
 
-    public void deleteGraph(GraphMeta meta) {
-        jedis.lpop(meta.getName());
-        String gn = PREFIX + meta.getName();
+    public boolean deleteGraph(String graphName) {
+        String gn = PREFIX + graphName;
+        if(!jedis.exists(graphName) || !jedis.exists(gn)) return false;
+        jedis.lpop(graphName);
         jedis.del(gn);
+        return true;
     }
 
     public String getGraphNameById(int id) {

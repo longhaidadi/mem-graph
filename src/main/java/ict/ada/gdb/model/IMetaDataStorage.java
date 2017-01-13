@@ -50,7 +50,7 @@ public interface IMetaDataStorage  {
      */
     int getRelType(String graphName, String relType);
 
-    void deleteGraph(GraphMeta meta);
+    boolean deleteGraph(String graphName);
 
     String getGraphNameById(int id);
 

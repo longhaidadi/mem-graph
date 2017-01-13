@@ -18,9 +18,6 @@ public class GDBRelation extends GDBGraphElement {
         this.weight = weight;
     }
 
-    public GDBRelation() {
-    }
-
     public GDBRelation(GDBNode head, GDBNode tail, int type) {
         this(head.getType(), head.getId(), tail.getType(), tail.getId(), type);
     }
