@@ -9,13 +9,6 @@ package ict.ada.gdb.model;
 public class GDBNode extends GDBGraphElement {
     private String name;
 
-    private boolean isMaster;
-    private String slaves;
-    private int data;
-    private int color;
-
-
-
     public GDBNode(int type ,String id) {
         super.setId(id == null ? name : id);
         super.setType(type);
@@ -53,35 +46,5 @@ public class GDBNode extends GDBGraphElement {
                 '}';
     }
 
-    public boolean isMaster() {
-        return isMaster;
-    }
 
-    public void setIsMaster(boolean isMaster) {
-        this.isMaster = isMaster;
-    }
-
-    public String getSlaves() {
-        return slaves;
-    }
-
-    public void setSlaves(String slaves) {
-        this.slaves = slaves;
-    }
-
-    public int getData() {
-        return data;
-    }
-
-    public void setData(int data) {
-        this.data = data;
-    }
-
-    public int getColor() {
-        return color;
-    }
-
-    public void setColor(int color) {
-        this.color = color;
-    }
 }

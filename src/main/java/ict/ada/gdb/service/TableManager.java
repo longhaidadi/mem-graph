@@ -12,11 +12,10 @@ public class TableManager {
      * DB allot
      * 0 used all GraphDB Meta
      * graphID*2+1: used store node and relation Attribute
-     * graphID*2+2: used store node and node compute value innodesId and outnodesId
-     * graphID*2+3: used store relation weight
+     * graphID*2+2: used store node and node compute value innodesId and outnodesId and relationWeight
      * */
 
-    static Jedis selectNodeTable(int graphID){
+    static Jedis selectAttributeTable(int graphID){
         int nodeDbIndex = graphID *2 +1;
         jedis.select(nodeDbIndex);
         return jedis;
@@ -28,8 +27,8 @@ public class TableManager {
         return jedis;
     }
 
-    static Jedis selectRelationTable(int graphId){
-        int relationDbIndex = graphId *2 +3;
+    static Jedis selectComputeTable(int graphId){
+        int relationDbIndex = graphId *2 +2;
         jedis.select(relationDbIndex);
         return jedis;
     }

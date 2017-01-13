@@ -14,13 +14,21 @@ import java.util.List;
 public class GDBGraphElement {
     public static final int ANY_TYPE = 0;
 
-    private String id;
+    protected String id;
 
-    private int type = -1;//Invalid Type
+    protected int type = -1;//Invalid Type
 
-    private List<Attribute> attributes = new LinkedList<Attribute>();
+    protected boolean isMaster;
 
-    private List<Occurance> occurs = new LinkedList<Occurance>();
+    protected String slaves;
+
+    protected int data;
+
+    protected int color;
+
+    protected List<Attribute> attributes = new LinkedList<Attribute>();
+
+    protected List<Occurance> occurs = new LinkedList<Occurance>();
 
     public String getIdInGraph() {
         return type + "_" + id;
@@ -99,5 +107,37 @@ public class GDBGraphElement {
                 ", attributes=" + attributes +
                 ", occurs=" + occurs +
                 '}';
+    }
+
+    public boolean isMaster() {
+        return isMaster;
+    }
+
+    public void setIsMaster(boolean isMaster) {
+        this.isMaster = isMaster;
+    }
+
+    public String getSlaves() {
+        return slaves;
+    }
+
+    public void setSlaves(String slaves) {
+        this.slaves = slaves;
+    }
+
+    public int getData() {
+        return data;
+    }
+
+    public void setData(int data) {
+        this.data = data;
+    }
+
+    public int getColor() {
+        return color;
+    }
+
+    public void setColor(int color) {
+        this.color = color;
     }
 }

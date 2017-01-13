@@ -16,18 +16,23 @@ public class ID {
         return nType+ConStr+nodeId;
     }
 
-    public static String makeNodeAttrKey(int nType, String nodeId){
-
-        return nType+ConStr+nodeId+ConStr+Attr;
-    }
+//    public static String makeNodeAttrKey(int nType, String nodeId){
+//
+//        return nType+ConStr+nodeId+ConStr+Attr;
+//    }
 
     public static String makeRelationIdKey(int snType,String snId,int tnType,String tnId,int rType){
 
-        return snType+ConStr+snId+ConStr+tnType+ConStr+rType;
+        return snType+ConStr+snId+ConStr+tnType+ConStr+tnId+ConStr+rType;
     }
 
-    public static String makeRelationAttrKey(int snType,String snId,int tnType,String tnId,int rType){
+    public static String makeNeighborId(int tnType,String tnId,int rType){
 
-        return snType+ConStr+snId+ConStr+tnType+ConStr+rType+ConStr+Attr;
+        return tnType+ConStr+tnId+rType;
     }
+
+//    public static String makeRelationAttrKey(int snType,String snId,int tnType,String tnId,int rType){
+//
+//        return snType+ConStr+snId+ConStr+tnType+ConStr+rType+ConStr+Attr;
+//    }
 }

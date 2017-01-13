@@ -8,7 +8,7 @@ import java.util.List;
 public interface Attribute extends WithTimestamp {
     String key();
 
-    Object value();
+    String value();
 
     List valueList();
 
